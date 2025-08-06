@@ -6,6 +6,7 @@
   <title>Savaş Uçakları Portalı</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    /* --- Buraya style.css kodunu ekle (önceki koyu askeri temayı kullanabilirsin) --- */
     body {
       font-family: 'Share Tech Mono', 'Segoe UI', Arial, sans-serif;
       background: #111923;
@@ -26,21 +27,16 @@
     }
     nav {
       background: #0b141e;
-      padding: 0;
-      margin: 0;
+      padding: 1rem 2rem;
       border-bottom-left-radius: 18px;
       border-bottom-right-radius: 18px;
       box-shadow: 0 2px 12px #0008;
     }
     nav ul {
       display: flex;
-      flex-direction: row;
       gap: 1.2rem;
       list-style: none;
-      margin: 0;
-      padding: 0.7rem 1.5rem 0.7rem 1.5rem;
-      justify-content: center;
-      align-items: center;
+      margin: 0; padding: 0;
     }
     nav a {
       color: #6df7c1;
@@ -48,18 +44,14 @@
       font-weight: 700;
       font-size: 1.1rem;
       transition: color 0.2s;
-      padding: 0.4rem 1.2rem;
-      border-radius: 7px 7px 0 0;
-      display: inline-block;
     }
     nav a:hover, nav .active {
       color: #ffde59;
-      background: #222c3d;
       border-bottom: 2px solid #ffde59;
     }
     .section {
       display: none;
-      max-width: 1100px;
+      max-width: 950px;
       margin: 2rem auto 1rem auto;
       background: rgba(22, 34, 45, 0.97);
       border-radius: 18px;
@@ -69,56 +61,31 @@
       border: 1px solid #34e0a1;
     }
     .section.active { display: block; }
-    h2 { color: #6df7c1; margin-top: 1.5rem; letter-spacing: 1px; }
-    .part-entry {
-      margin-bottom: 2.2rem;
-      border-left: 4px solid #ffde59;
-      padding-left: 1.3rem;
-      background: #1a2331;
-      border-radius: 6px;
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
+    .aircraft-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
     }
-    .part-entry h4 { margin: 0 0 0.4rem 0; color: #ffde59; }
-    .projecard {
-      background: #18243b;
-      border: 1px solid #64ffda77;
-      border-radius: 10px;
+    .aircraft-card {
+      background: #181f2b;
+      border: 1px solid #6df7c155;
+      border-radius: 12px;
+      width: 250px;
+      margin: 1rem 0;
+      padding: 1rem;
+      transition: box-shadow 0.2s;
+      box-shadow: 0 2px 16px #00ff7b11;
+    }
+    .aircraft-card img {
       width: 100%;
-      min-height: 210px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 10px #00ff7b22;
+      border-radius: 9px;
+      border: 1px solid #34e0a1;
+      background: #212733;
     }
-    .projecard h3 { margin-top:0; color:#ffde59; }
-    .glossary-list {
-      background: #25334a;
-      border-radius: 10px;
-      padding: 1.2rem 2rem;
-      margin-top: 2rem;
-    }
-    .glossary-list dt {
-      color: #ffde59;
-      font-weight: bold;
-      margin-top: 1.1rem;
-    }
-    .glossary-list dd {
-      margin-bottom: 0.5rem;
-      color: #cfc;
-      margin-left: 1.2rem;
-    }
-    .news-list { margin: 1.5rem 0; padding-left: 1.2rem;}
-    .news-list li { margin-bottom: 1.1rem; }
-    .bernoulli-box {
-      background:#202b38;
-      color:#fffbe0;
-      border-left:6px solid #ffde59;
-      margin:1.5rem 0 2rem 0;
-      padding:1.2rem 2rem;
-      border-radius:12px;
-      font-size:1.05rem;
-      line-height:1.7;
-    }
+    .aircraft-card h3 { color: #6df7c1; margin: 0.6rem 0 0.2rem 0; font-size: 1.1rem; }
+    .aircraft-card .specs { font-size: 0.93rem; color: #ccf; }
+    h2 { color: #6df7c1; margin-top: 1.5rem; letter-spacing: 1px; }
     .contact-form label { margin-top: 1rem; }
     .contact-form input, .contact-form textarea {
       padding: 0.7rem; border-radius: 8px; border: 1px solid #6df7c1;
@@ -132,10 +99,12 @@
       transition: background 0.2s, color 0.2s;
     }
     .contact-form button:hover { background: #ffde59; color: #18243b; }
-    @media (max-width: 850px) {
+    .news-list { margin: 1.5rem 0; }
+    .news-list li { margin-bottom: 1.1rem; }
+    @media (max-width: 700px) {
+      .aircraft-list { flex-direction: column; align-items: center; }
       .section { padding: 1rem 0.5rem; }
       nav ul { flex-direction: column; gap: 0.7rem; }
-      nav a { border-radius: 8px; }
     }
   </style>
 </head>
@@ -146,151 +115,190 @@
   </header>
   <nav>
     <ul>
-      <li><a href="#" class="tablink" data-section="anasayfa">Ana Sayfa</a></li>
+      <li><a href="#" class="tablink active" data-section="anasayfa">Ana Sayfa</a></li>
       <li><a href="#" class="tablink" data-section="yenilikler">Yenilikler</a></li>
       <li><a href="#" class="tablink" data-section="haberler">Haberler</a></li>
-      <li><a href="#" class="tablink" data-section="ucakusurleri">Uçak Nasıl Uçar?</a></li>
-      <li><a href="#" class="tablink active" data-section="projelerim">Projelerim</a></li>
-      <li><a href="#" class="tablink" data-section="parcaansiklopedisi">Parça Ansiklopedisi</a></li>
+      <li><a href="#" class="tablink" data-section="motorlar">Motorlar</a></li>
+      <li><a href="#" class="tablink" data-section="kanatlar">Kanatlar</a></li>
+      <li><a href="#" class="tablink" data-section="kuyruklar">Kuyruklar</a></li>
       <li><a href="#" class="tablink" data-section="iletisim">İletişim</a></li>
     </ul>
   </nav>
 
-  <!-- PROJELERİM (DETAYLI VE SÖZLÜKLÜ) -->
-  <div id="projelerim" class="section active">
-    <h2>Geleceğin Savaş Uçağı: Grafen Gövdeli, Piezoelektrik Enerji Geri Kazanımlı, Nanotermit Hızlandırmalı ve Plazma-Elektromanyetik Motorlu</h2>
-    <div class="projecard">
-      <h3>Bilimsel ve Detaylı Açıklama</h3>
-      <p><b>Gövde:</b> Savaş uçağının ana gövdesi, ultra hafif ve olağanüstü dayanıklı bir malzeme olan <b>grafen</b> tabakalarından oluşmaktadır. Bu yapı, uçağın ağırlığını azaltırken mukavemetini maksimum düzeye çıkarır. Gövdenin hemen altında, grafenin esnekliğinden doğrudan yararlanmak için yerleştirilen özel <b>piezoelektrik kristal tabakalar</b> bulunur. Uçak ani bir darbe (örneğin yüksek G manevrası, hava muharebesinde isabet veya türbülans) aldığında, bu tabakalar deformasyona uğrayarak mekanik enerjiyi doğrudan elektrik enerjisine dönüştürür.</p>
-      <p><b>Enerji Depolama ve Ani Hızlanma:</b> Elde edilen elektrik enerjisi gövde içine entegre edilen <b>nanotermit</b> hücrelerinde depolanır veya doğrudan tetikleyici olarak kullanılır. Nanotermit, klasik patlayıcılardan çok daha hızlı ve kontrollü bir reaksiyon sunar. Uçağın ani hızlanma ihtiyacı olduğunda, bu piezoelektrik yoluyla elde edilen enerji nanotermiti tetikler ve ortaya çıkan büyük miktarda enerji uçağa kısa sürede ekstra itki sağlar. Bu, klasik art yakıcı sistemlere göre çok daha hızlı ve kontrollü bir ivmelenme sağlar.</p>
-      <p><b>Motor ve İtki Sistemi:</b> Uçağın motorunda, depolanan/üretilen elektrik enerjisi kullanılarak gaz fazındaki yakıt çok yüksek voltajla <b>plazma</b> haline getirilir. Motorun içinde bulunan bir dizi güçlü <b>bobin</b> ile elektro manyetik alan oluşturulur. Bu elektromanyetik alan, plazmayı motorun <b>nozzle</b> (egzoz çıkışı) boyunca hızlandırarak yüksek enerjili plazma jetini arkaya doğru fırlatır. <b>Newton'un 3. Yasası</b> gereği (her etkiye karşı bir tepki), bu işlem uçağın ileri yönde hızlanmasını sağlar. Plazma ve elektromanyetik itki sayesinde hem yüksek hız hem de yakıt verimliliği elde edilir; klasik jet motorlarına göre çok daha sessiz ve gizli bir itki sistemi mümkündür.</p>
-      <p><b>Sistemsel Avantajlar:</b> Bu bütünleşik sistem; gövde-darbe-enerji dönüşümü, hızlı reaksiyonlu kimyasal hızlandırıcı ve elektromanyetik/plazmatik motorun birleşimiyle uçağa olağanüstü manevra, hız, enerji verimliliği ve görev esnekliği sunar. Ayrıca, sistemin büyük kısmı dışarıdan gözlemlenmesi ve izlenmesi güç olacak şekilde gövde içine entegre edilmiştir.</p>
-    </div>
-    <div class="glossary-list">
-      <h3>Açıklama Sözlüğü</h3>
-      <dl>
-        <dt>Grafen</dt>
-        <dd>Karbon atomlarının altıgen örgüde dizildiği, tek atom kalınlığında, son derece hafif ve dayanıklı bir nanomalzemedir.</dd>
-        <dt>Piezoelektrik</dt>
-        <dd>Bazı kristal yapıların mekanik baskı altında elektrik üretme özelliği, enerji geri kazanımı için kullanılır.</dd>
-        <dt>Nanotermit</dt>
-        <dd>Nanometre boyutunda metal ve oksitleyici bileşenlerle hazırlanan, çok hızlı reaksiyona giren ve yüksek sıcaklıkta enerji açığa çıkaran bir malzeme.</dd>
-        <dt>Plazma</dt>
-        <dd>Gaz halindeki bir maddenin çok yüksek sıcaklıkta iyonlaşarak pozitif iyon ve serbest elektronlardan oluşan, dördüncü madde hali.</dd>
-        <dt>Bobin</dt>
-        <dd>Elektrik akımı geçtiğinde manyetik alan oluşturan, elektromanyetik itki sistemlerinde temel görev üstlenen tel sargı elemanı.</dd>
-        <dt>Nozzle</dt>
-        <dd>Motorun çıkış (egzoz) bölümüdür, gazı/plazmayı yüksek hızda fırlatarak uçağı hareket ettirir.</dd>
-        <dt>Newton'un 3. Yasası</dt>
-        <dd>Her etkiye karşılık eşit ve zıt bir tepki vardır. (Etki-Tepki Prensibi, jet ve roket itkisinin temelidir.)</dd>
-      </dl>
+  <!-- Sekmelerin içerikleri -->
+  <div id="anasayfa" class="section active">
+    <h2>En Ünlü Savaş Uçakları</h2>
+    <div class="aircraft-list">
+      <!-- Her uçak için bir kart -->
+      <div class="aircraft-card">
+        <img src="sr72.jpg" alt="SR-72">
+        <h3>SR-72</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Lockheed Martin<br>
+          <strong>Azami Hız:</strong> Mach 6 (Tahmini)<br>
+          <strong>Görev:</strong> İleri keşif, hipersonik hız<br>
+          <strong>Açıklama:</strong> SR-72, hipersonik hızlara ulaşabilen ve radar izini azaltan tasarımıyla öne çıkan, henüz prototip aşamasında olan bir keşif uçağıdır.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="b2.jpg" alt="B-2 Spirit">
+        <h3>B-2 Spirit</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Northrop Grumman<br>
+          <strong>Azami Hız:</strong> 1.010 km/sa<br>
+          <strong>Görev:</strong> Stratejik bombardıman<br>
+          <strong>Açıklama:</strong> B-2 Spirit, görünmezlik (stealth) özelliğine sahip, nükleer ve konvansiyonel bombalar taşıyabilen stratejik bombardıman uçağıdır.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="f22.jpg" alt="F-22 Raptor">
+        <h3>F-22 Raptor</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Lockheed Martin<br>
+          <strong>Azami Hız:</strong> Mach 2.25<br>
+          <strong>Görev:</strong> Hava üstünlüğü<br>
+          <strong>Açıklama:</strong> F-22, üstün manevra kabiliyeti, düşük radar izi ve gelişmiş aviyonikleriyle dünyanın en gelişmiş avcı uçaklarından biridir.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="f35.jpg" alt="F-35 Lightning II">
+        <h3>F-35 Lightning II</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Lockheed Martin<br>
+          <strong>Azami Hız:</strong> Mach 1.6<br>
+          <strong>Görev:</strong> Çok rollü savaş uçağı<br>
+          <strong>Açıklama:</strong> F-35, hava-hava ve hava-yer görevlerinde kullanılabilen, düşük görünürlük ve ileri sensör teknolojilerine sahip bir uçaktır.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="su57.jpg" alt="Su-57">
+        <h3>Su-57</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Sukhoi (Rusya)<br>
+          <strong>Azami Hız:</strong> Mach 2<br>
+          <strong>Görev:</strong> Çok rollü avcı<br>
+          <strong>Açıklama:</strong> Su-57, Rusya'nın beşinci nesil çok rollü savaş uçağıdır. Stealth, süpersonik hız ve manevra kabiliyetiyle dikkat çeker.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="j20.jpg" alt="J-20 Mighty Dragon">
+        <h3>J-20 Mighty Dragon</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Chengdu (Çin)<br>
+          <strong>Azami Hız:</strong> Mach 2<br>
+          <strong>Görev:</strong> Hava üstünlüğü<br>
+          <strong>Açıklama:</strong> J-20, Çin'in beşinci nesil stealth avcı uçağıdır. Uzun menzili ve gelişmiş aviyonikleriyle öne çıkar.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="rafale.jpg" alt="Dassault Rafale">
+        <h3>Dassault Rafale</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Dassault Aviation (Fransa)<br>
+          <strong>Azami Hız:</strong> Mach 1.8<br>
+          <strong>Görev:</strong> Çok rollü savaş uçağı<br>
+          <strong>Açıklama:</strong> Rafale, hava-hava, hava-yer ve deniz görevlerinde kullanılabilen çok amaçlı bir Fransız savaş uçağıdır.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="eurofighter.jpg" alt="Eurofighter Typhoon">
+        <h3>Eurofighter Typhoon</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Eurofighter GmbH (AB Ortaklığı)<br>
+          <strong>Azami Hız:</strong> Mach 2<br>
+          <strong>Görev:</strong> Hava üstünlüğü, çok rollü<br>
+          <strong>Açıklama:</strong> Typhoon, yüksek manevra kabiliyeti ve çok rollü görev kapasitesiyle Avrupa'nın en önemli savaş uçaklarından biridir.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="f16.jpg" alt="F-16 Fighting Falcon">
+        <h3>F-16 Fighting Falcon</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Lockheed Martin<br>
+          <strong>Azami Hız:</strong> Mach 2<br>
+          <strong>Görev:</strong> Çok rollü avcı<br>
+          <strong>Açıklama:</strong> F-16, hafif ve çok yönlü bir savaş uçağıdır. Dünya çapında 20'den fazla ülke tarafından kullanılmaktadır.
+        </div>
+      </div>
+      <div class="aircraft-card">
+        <img src="mig29.jpg" alt="MiG-29 Fulcrum">
+        <h3>MiG-29 Fulcrum</h3>
+        <div class="specs">
+          <strong>Üretici:</strong> Mikoyan (Rusya)<br>
+          <strong>Azami Hız:</strong> Mach 2.25<br>
+          <strong>Görev:</strong> Hava üstünlüğü, çok rollü<br>
+          <strong>Açıklama:</strong> MiG-29, yüksek manevra kabiliyeti ve bakım kolaylığı ile bilinen, Sovyet yapımı bir avcı uçağıdır.
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- YENİLİKLER -->
   <div id="yenilikler" class="section">
     <h2>Uçaklarda Yenilikler</h2>
     <ul>
       <li><b>Stealth (Görünmezlik) Teknolojisi:</b> Radar izini azaltan özel şekil ve kaplamalar.</li>
       <li><b>AESA Radarlar:</b> Aktif elektronik taramalı dizi radarlar, daha hassas ve çoklu hedef takibi sağlar.</li>
-      <li><b>Grafen ve Kompozit Malzemeler:</b> Ultra hafif ve dayanıklı gövde üretimi.</li>
-      <li><b>Enerji Geri Kazanımı:</b> Piezoelektrik ve benzeri teknolojilerle darbe enerjisinin elektriğe dönüştürülmesi.</li>
-      <li><b>Plazma/Elektromanyetik İtki:</b> Gazı iyonlaştırarak ve manyetik alanla hızlandırarak yeni nesil motor sistemleri.</li>
-      <li><b>İnsansız ve Otonom Savaş Uçakları:</b> Yapay zeka ile görev yapabilme.</li>
+      <li><b>Kompozit Malzemeler:</b> Karbon fiber ve benzeri hafif ama dayanıklı malzemelerle gövde üretimi.</li>
+      <li><b>Dijital Aviyonik Sistemler:</b> Tamamen dijital kokpit, gelişmiş uçuş bilgisayarları.</li>
+      <li><b>İleri Silah Sistemleri:</b> Akıllı mühimmat, lazer güdümlü bombalar ve entegre silah yönetimi.</li>
+      <li><b>Supercruise:</b> Art yakıcı kullanmadan süpersonik hızda uçuş.</li>
+      <li><b>Veri Bağlantısı (Data Link):</b> Uçaklar arası veri paylaşımı ve ağ merkezli savaş kabiliyeti.</li>
+      <li><b>Gelişmiş Sensör Füzyonu:</b> Tüm sensörlerden gelen bilgilerin tek ekranda birleştirilmesi.</li>
+      <li><b>İnsansız Savaş Uçakları:</b> Otonom veya uzaktan kumandalı savaş uçakları.</li>
     </ul>
   </div>
-
-  <!-- HABERLER -->
   <div id="haberler" class="section">
     <h2>Savaş Uçakları Haberleri</h2>
     <ul class="news-list">
-      <li>KIZILELMA'nın ikinci prototipi test uçuşunu başarıyla tamamladı!</li>
-      <li>KAAN'dan tarihi başarı: MMU'nun ilk uçuşu gerçekleşti.</li>
-      <li>SR-72'nin ilk uçuşu için geri sayım başladı.</li>
-      <li>F-35'e yeni nesil sensör füzyonu güncellemesi geldi.</li>
-      <li>Rusya, Su-57 üretimini hızlandırıyor.</li>
-      <li>Çin, J-20 filosunu büyütüyor.</li>
+      <li><b>SR-72'nin ilk uçuşuna az kaldı!</b> Lockheed Martin, hipersonik keşif uçağı SR-72'nin prototip testlerinin başlayacağını açıkladı. (2025)</li>
+      <li><b>F-35'e yeni yazılım güncellemesi</b> ile sensör füzyonu ve görev kabiliyeti artırıldı.</li>
+      <li><b>Rusya, Su-57 filosunu artırıyor</b> ve yeni nesil radar sistemleri entegre ediliyor.</li>
+      <li><b>Çin, J-20 üretimini hızlandırdı</b> ve yeni motor teknolojileriyle daha uzun menzile ulaşıyor.</li>
+      <li><b>Türkiye'nin Milli Muharip Uçağı KAAN ilk uçuşunu başarıyla tamamladı.</b></li>
     </ul>
+    <!-- Buraya güncel haber başlıkları veya kısa özetler ekleyebilirsin -->
   </div>
-
-  <!-- UÇAK NASIL UÇAR? -->
-  <div id="ucakusurleri" class="section">
-    <h2>Uçak Nasıl Uçar? (Bernoulli İlkesi ve Aerodinamik)</h2>
-    <div class="bernoulli-box">
-      Bir uçağın uçabilmesi için kaldırma (lift), ağırlık (weight), itki (thrust) ve sürüklenme (drag) kuvvetleri dengelenmelidir.<br>
-      Kanadın üstünden geçen hava hızlı, altından geçen hava yavaştır. <b>Bernoulli İlkesi</b>’ne göre, hız arttıkça basınç azalır. Böylece kanadın üstünde düşük basınç, altında yüksek basınç oluşur ve uçak yukarıya doğru kaldırılır.<br>
-      <ul>
-        <li><b>Kanat Üstü:</b> Hava hızlı akar → düşük basınç</li>
-        <li><b>Kanat Altı:</b> Hava yavaş akar → yüksek basınç</li>
-        <li>Bu fark, uçağın havada kalmasını sağlar.</li>
-      </ul>
-    </div>
+  <div id="motorlar" class="section">
+    <h2>Savaş Uçağı Motor Türleri</h2>
+    <ul>
+      <li><b>Turbojet:</b> En eski jet motor tipi. Yüksek hızda doğrudan itki sağlar. Örnek: MiG-21.</li>
+      <li><b>Turbofan:</b> Modern savaş uçaklarında yaygın. Fan sayesinde daha verimli ve sessiz. Örnek: F-22, F-35.</li>
+      <li><b>Afterburner (Art Yakıcı):</b> Kısa süreli yüksek itki için kullanılan, yakıtı egzozda yakan ek sistem.</li>
+      <li><b>Ramjet:</b> Çok yüksek hızlarda (Mach 3+) verimli, hareketli parçası yok, örnek: bazı füzeler.</li>
+      <li><b>Scramjet:</b> Hipersonik (Mach 5+) hızlarda, SR-72 gibi uçaklarda düşünülüyor.</li>
+      <li><b>İtki-Vektörleme:</b> Motor gaz çıkışının yönlendirilmesiyle ekstra manevra kabiliyeti.</li>
+      <li><b>Düşük Isı İzi:</b> Motorun kızılötesi izinin azaltılması için özel tasarımlar.</li>
+    </ul>
+    <p>
+      <b>Detay:</b> Savaş uçakları motorları yüksek irtifa, süpersonik hız ve ani manevra gereksinimleri için özel olarak tasarlanır.<br>
+      Modern uçaklar, hem yüksek hız hem de yakıt tasarrufu için "değişken bypass oranlı" turbofan motorları kullanırlar.
+    </p>
   </div>
-
-  <!-- PARÇA ANSİKLOPEDİSİ (ÇOK DETAYLI) -->
-  <div id="parcaansiklopedisi" class="section">
-    <h2>Parça Ansiklopedisi</h2>
-    <div class="part-entry">
-      <h4>Gövde (Fuselage)</h4>
-      <ul>
-        <li><b>Monokok Gövde:</b> Tüm yük dış kabuk tarafından taşınır, hafif ve aerodinamik.</li>
-        <li><b>Yarı Monokok Gövde:</b> İç iskelet + dış kabuk birlikte yük taşır, modern uçaklarda yaygın.</li>
-        <li><b>Kompozit/Grafen Gövde:</b> Karbon fiber, grafen tabakalarıyla yapılan, ultra hafif ve aşırı sağlam yapılar.</li>
-        <li><b>Gövde Görevleri:</b> Kabin, aviyonikler, yakıt tankları, iniş takımı, silah yuvaları burada bulunur.</li>
-        <li><b>Farklar:</b> Kompozitler en hafif ve en dayanıklıdır, yarı monokok bakım kolaylığı sağlar.</li>
-      </ul>
-    </div>
-    <div class="part-entry">
-      <h4>Kanat (Wing)</h4>
-      <ul>
-        <li><b>Düz Kanat:</b> Alçak hızda ideal, eğitim/kargo uçaklarında yaygın.</li>
-        <li><b>Süpürülmüş Kanat:</b> Yüksek hızda dalga direncini azaltır, çoğu savaş uçağında kullanılır (F-16, MiG-29).</li>
-        <li><b>Delta Kanat:</b> Üçgen biçimli, yüksek hız ve stabilite sağlar (Mirage 2000, J-20).</li>
-        <li><b>Değişken Geometrili (Swing-Wing):</b> Açısı uçuşa göre değişir, hem düşük hem yüksek hızda verimlilik (F-14 Tomcat, Tornado).</li>
-        <li><b>Canard:</b> Ana kanattan önce küçük ek kanatlar, manevra ve kaldırma artırımı (Rafale, Gripen).</li>
-        <li><b>Avantajlar:</b> Delta kanat yüksek hızda stabilite, swing-wing her hızda verimlilik sağlar.</li>
-      </ul>
-    </div>
-    <div class="part-entry">
-      <h4>Motor (Engine)</h4>
-      <ul>
-        <li><b>Turbojet:</b> Yüksek hızlı, doğrudan itkiyle çalışan basit motor (MiG-21).</li>
-        <li><b>Turbofan:</b> Modern savaş uçaklarının çoğu, verimli ve güçlü (F-22, F-35).</li>
-        <li><b>Afterburner (Art Yakıcı):</b> Kısa süreli aşırı itki için ek yakma odası.</li>
-        <li><b>Ramjet/Scramjet:</b> Mach 3 ve üzeri hızlarda, hareketli parça yok, füzelerde ve hipersonik uçaklarda.</li>
-        <li><b>Plazma/E-Motor:</b> Gazı plazmaya çevirip elektromanyetik alanla hızlandırır (gelişmekte olan teknoloji).</li>
-        <li><b>Farklar:</b> Turbojet düşük verimli, turbofan sessiz ve ekonomik, ramjet ultra hızlı, plazma ise teorik olarak çok yüksek hızlara ulaşabilir.</li>
-      </ul>
-    </div>
-    <div class="part-entry">
-      <h4>Kuyruk (Tail)</h4>
-      <ul>
-        <li><b>Tek Dikey Stabilizatör:</b> En yaygın tip, klasik tasarım (F-16).</li>
-        <li><b>Çift Dikey Stabilizatör:</b> Daha iyi manevra ve düşük radar izi (F-22, Su-57).</li>
-        <li><b>V Kuyruk:</b> Düşük radar izi ve aerodinamik avantaj (RQ-4 Global Hawk).</li>
-        <li><b>T Kuyruk:</b> Yatay stabilizatör dikeyin tepesinde, yüksek irtifa uçaklarında (U-2).</li>
-      </ul>
-    </div>
-    <div class="part-entry">
-      <h4>İniş Takımı (Landing Gear)</h4>
-      <ul>
-        <li><b>Sabit İniş Takımı:</b> Küçük ve düşük hızlı uçaklarda, bakım kolay.</li>
-        <li><b>Çekilebilir İniş Takımı:</b> Tüm modern savaş uçaklarında, hava direncini azaltır.</li>
-        <li><b>Bisiklet Tipi:</b> İki ana teker önde-arkada, çok yüksek irtifa uçaklarında (U-2).</li>
-      </ul>
-    </div>
-    <div class="part-entry">
-      <h4>Radar ve Sensörler</h4>
-      <ul>
-        <li><b>Konvansiyonel Radar:</b> Döner reflektörlü, eski tip.</li>
-        <li><b>AESA Radar:</b> Elektronik taramalı, çok hızlı ve hassas.</li>
-        <li><b>IRST:</b> Kızılötesi arama ve takip sistemi.</li>
-        <li><b>MAWS:</b> Füze ikaz sistemi.</li>
-      </ul>
-    </div>
+  <div id="kanatlar" class="section">
+    <h2>Kanat Türleri ve Özellikleri</h2>
+    <ul>
+      <li><b>Düz Kanat:</b> Alçak hızlı uçaklarda yaygındır. Savaş uçaklarında nadiren kullanılır.</li>
+      <li><b>Süpürülmüş Kanat:</b> Yüksek hızda dalga direncini azaltır. Örnek: F-16, MiG-29.</li>
+      <li><b>Delta Kanat:</b> Yüksek hızda stabilite ve manevra sağlar. Örnek: Dassault Mirage, Eurofighter Typhoon.</li>
+      <li><b>Değişken Geometrili Kanat (Swing-Wing):</b> Uçuşa göre açısı değişebilir. Hem düşük, hem yüksek hızda avantaj sağlar. Örnek: F-14 Tomcat.</li>
+      <li><b>Canard (Ön Kanat):</b> Ana kanattan önce kısa küçük kanatlar. Manevra ve kaldırma kuvvetini artırır. Örnek: Dassault Rafale.</li>
+    </ul>
+    <p>
+      <b>Detay:</b> Kanat yapısı; uçağın hızını, manevra kabiliyetini ve yük taşıma kapasitesini doğrudan etkiler.
+    </p>
   </div>
-
-  <!-- İLETİŞİM -->
+  <div id="kuyruklar" class="section">
+    <h2>Kuyruk Türleri ve Özellikleri</h2>
+    <ul>
+      <li><b>Tek Dikey Stabilizatör:</b> En yaygın tip. Örnek: F-16, MiG-29.</li>
+      <li><b>Çift Dikey Stabilizatör:</b> Görünmezlik ve manevra için iki dikey kuyruk. Örnek: F-22, F-35, Su-57.</li>
+      <li><b>V Kuyruk:</b> İki kuyruk birleşerek "V" şekli alır. Düşük radar izi için. Örnek: Northrop Grumman RQ-4 Global Hawk.</li>
+      <li><b>T Kuyruk:</b> Yatay stabilizatör, dikey stabilizatörün tepesinde. Yüksek irtifa uçaklarında. Örnek: U-2.</li>
+      <li><b>Çift Kanat (Biplane):</b> Üst üste iki kanat, günümüz savaş uçaklarında kullanılmaz.</li>
+    </ul>
+    <p>
+      <b>Detay:</b> Kuyruk tasarımı, uçağın dengesi, manevra kabiliyeti ve radar izi açısından çok önemlidir.
+    </p>
+  </div>
   <div id="iletisim" class="section">
     <h2>İletişim / Soru Sor</h2>
     <form class="contact-form">
@@ -307,16 +315,20 @@
     &copy; 2025 Savaş Uçakları Portalı | FlyByCode
   </footer>
   <script>
+    // Sekme (tab) geçişleri
     document.querySelectorAll('.tablink').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
+        // Sekmeleri kapat
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.tablink').forEach(lk => lk.classList.remove('active'));
+        // Seçili sekmeyi aç
         const secId = this.getAttribute('data-section');
         document.getElementById(secId).classList.add('active');
         this.classList.add('active');
       });
     });
+    // Basit iletişim formu (geliştirmek istersen bana yazabilirsin)
     document.querySelector('.contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       alert('Mesajınız gönderildi! (Demo)');
